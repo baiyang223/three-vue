@@ -11,32 +11,55 @@ const camera = ref()
 // 创建渲染器
 const renderer = new THREE.WebGL1Renderer()
 // 创建几何体
-const geometry = new THREE.BoxGeometry(1, 1, 1)
+const cubeGeometry = new THREE.BoxGeometry(1, 1, 1)
 // 创建材质
-const material = new THREE.MeshBasicMaterial({ color: 'blue' })
-const parentMaterial = new THREE.MeshBasicMaterial({ color: 'red' })
-// 父元素
-const parentCube = new THREE.Mesh(geometry, parentMaterial)
+const cubeMaterial = new THREE.MeshBasicMaterial({ color: 'blue' })
+const cubeMaterial1 = new THREE.MeshBasicMaterial({ color: 'red' })
+const cubeMaterial2 = new THREE.MeshBasicMaterial({ color: 'green' })
+const cubeMaterial3 = new THREE.MeshBasicMaterial({ color: 'pink' })
+const cubeMaterial4 = new THREE.MeshBasicMaterial({ color: 'yellowgreen' })
+const cubeMaterial5 = new THREE.MeshBasicMaterial({ color: 'yellow' })
 // 创建网络
-const cube = new THREE.Mesh(geometry, material)
-// 添加元素
-parentCube.add(cube)
-// 设置立方体位移
-parentCube.position.set(-3, 0, 0)
-cube.position.set(3, 0, 0)
-// 设置立方体的放大
-parentCube.scale.set(2, 2, 2)
-// cube.scale.set(2,2,2)
-// 绕着x轴旋转
-parentCube.rotation.set(Math.PI / 3, 0, 0)
-cube.rotation.set(Math.PI / 4, 0, 0)
+const cube = new THREE.Mesh(cubeGeometry, [cubeMaterial, cubeMaterial1, cubeMaterial2, cubeMaterial3, cubeMaterial4, cubeMaterial5])
+cube.position.set(2, 2, 1)
 // 将网络添加到场景中
-scene.add(parentCube)
-// scene.add(cube)
+scene.add(cube)
+// 创建几何体
+const geometry = new THREE.BufferGeometry()
+// 使用索引绘制
+const vertices = new Float32Array([
+  -1, -1, 0,
+  1, -1, 0,
+  1, 1, 0,
+  -1, 1, 0,
+])
+// // 创建顶点属性
+geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3))
+// 创建索引
+const indices = new Uint16Array([0, 1, 2, 2, 3, 0])
+// 创建索引属性
+geometry.setIndex(new THREE.BufferAttribute(indices, 1))
+
+// 设置两个顶点组，形成两个材质
+geometry.addGroup(0, 3, 0)
+geometry.addGroup(3, 3, 1)
+// 创建材质
+const material = new THREE.MeshBasicMaterial({
+  color: 0x00FF00,
+  // side: THREE.DoubleSide, // 正反都能看到
+  wireframe: true,
+})
+const material1 = new THREE.MeshBasicMaterial({
+  color: 0xFF0000,
+  side: THREE.DoubleSide, // 正反都能看到
+  // wireframe: true,
+})
+const plane = new THREE.Mesh(geometry, [material, material1])
+scene.add(plane)
 // 添加世界坐标辅助器
 const axesHelper = new THREE.AxesHelper(5)
 scene.add(axesHelper)
-
+// 轨道控制器全局变量
 const controls = ref()
 
 onMounted(() => {
@@ -66,7 +89,7 @@ onMounted(() => {
   // 设置阻尼的数值
   controls.value.dampingFactor = 0.05
 
-  camera.value.position.set(4, 2, 10)
+  camera.value.position.set(4, 1, 5)
   camera.value.lookAt(0, 0, 0)
 
   // 动画渲染
@@ -83,29 +106,10 @@ function animate() {
   //     渲染
   renderer.render(scene, camera.value)
 }
-
-function fullScreen() {
-  // 全屏
-  // renderer.domElement.requestFullscreen()
-  document.body.requestFullscreen()
-}
-
-function exitFullscreenFn() {
-  //   退出全屏
-  if (document.fullscreenElement)
-    document.exitFullscreen()
-}
 </script>
 
 <template>
-  <div ref="testMain" class="main">
-    <el-button class="btn" type="primary" @click="fullScreen">
-      全屏
-    </el-button>
-    <el-button class="btn btn2" type="primary" @click="exitFullscreenFn">
-      退出全屏
-    </el-button>
-  </div>
+  <div ref="testMain" class="main" />
 </template>
 
 <style scoped lang="scss">

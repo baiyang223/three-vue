@@ -57,6 +57,18 @@ function toRouter(path: string) {
           <el-menu-item index="test5" route="test5">
             <span>lil-GUI调试</span>
           </el-menu-item>
+          <el-menu-item index="test6" route="test6">
+            <span>几何体_顶点_索引_平面</span>
+          </el-menu-item>
+          <el-menu-item index="test7" route="test7">
+            <span>几何体划分顶点组设置不同材质</span>
+          </el-menu-item>
+          <el-menu-item index="test8" route="test8">
+            <span>常见几何体</span>
+          </el-menu-item>
+          <el-menu-item index="test9" route="test9">
+            <span>基础材料_贴图_高光_透视_环境_光照_环境遮蔽贴图</span>
+          </el-menu-item>
         </el-menu>
         <div class="menuBox" style="margin-bottom: 40px;margin-top: auto">
           <svg-icon name="outLogin" class="icon" width="24px" height="24px" />
@@ -125,13 +137,19 @@ function toRouter(path: string) {
 
 .homeMenu {
   min-width: 200px;
+  max-width: 200px;
   height: calc(100vh - 64px);
   background: #fff;
   border-right: 1px #EBEBEB solid;
   flex-direction: column;
   display: flex;
+  overflow-y: auto;
   .el-menu {
     border: none;
+    .el-menu-item {
+      white-space: pre-wrap;
+      line-height: 20px;
+    }
   }
   .menuBox {
     display: flex;
@@ -141,6 +159,7 @@ function toRouter(path: string) {
     height: 52px;
     border-radius: 12px;
     margin: 20px auto 0 auto;
+    padding-top: 20px;
     cursor: pointer;
     box-sizing: content-box;
 

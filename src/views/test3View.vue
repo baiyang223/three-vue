@@ -57,7 +57,7 @@ onMounted(() => {
   controls.value.enableDamping = true
   // 设置阻尼的数值
   controls.value.dampingFactor = 0.05
-  // 设置旋转速度
+  // 设置自动旋转
   // controls.value.autoRotate = true
 
   // 设置相机位置

@@ -2,27 +2,38 @@
 import * as THREE from 'three'
 import { onMounted, ref } from 'vue'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
+import { GUI } from 'three/examples/jsm/libs/lil-gui.module.min.js'
 
 const testMain = ref()
 // 创建场景
 const scene = new THREE.Scene()
 // 创建相机
 const camera = ref()
+// 创建纹理加载器
+const textureLoader = new THREE.TextureLoader()
+const texture = textureLoader.load()
 // 创建渲染器
 const renderer = new THREE.WebGL1Renderer()
 // 创建几何体
-const geometry = new THREE.BoxGeometry(1, 1, 1)
+const planeGeometry = new THREE.PlaneGeometry(1, 1)
 // 创建材质
-const material = new THREE.MeshBasicMaterial({ color: 'blue' })
+const planeMaterial = new THREE.MeshBasicMaterial({
+  color: 'blue',
+})
 // 创建网络
-const cube = new THREE.Mesh(geometry, material)
+const plane = new THREE.Mesh(planeGeometry, planeMaterial)
 // 将网络添加到场景中
-scene.add(cube)
+scene.add(plane)
 // 添加世界坐标辅助器
 const axesHelper = new THREE.AxesHelper(5)
 scene.add(axesHelper)
 
 const controls = ref()
+
+const params = {}
+
+// 创建GUI
+const gui = new GUI()
 
 onMounted(() => {
   // 创建相机
@@ -46,10 +57,7 @@ onMounted(() => {
   controls.value.autoRotate = true
 
   // 设置相机位置
-  // camera.value.position.z = 5
-  // camera.value.position.y = 2
-  // camera.value.position.x = 2
-  camera.value.position.set(2, 2, 5)
+  camera.value.position.set(2, 2, 15)
   camera.value.lookAt(0, 0, 0)
 
   // 动画渲染
@@ -60,10 +68,6 @@ onMounted(() => {
 function animate() {
   requestAnimationFrame(animate)
   controls.value.update()
-  //     旋转
-  //   cube.rotation.x += .01
-  //   cube.rotation.y += .01
-  //     渲染
   renderer.render(scene, camera.value)
 }
 </script>
