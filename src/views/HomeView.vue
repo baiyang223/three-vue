@@ -69,6 +69,12 @@ function toRouter(path: string) {
           <el-menu-item index="test9" route="test9">
             <span>基础材料_贴图_高光_透视_环境_光照_环境遮蔽贴图</span>
           </el-menu-item>
+          <el-menu-item index="test10" route="test10">
+            <span>场景的线型雾和指数雾</span>
+          </el-menu-item>
+          <el-menu-item index="test11" route="test11">
+            <span>加载gltf模型和加载压缩过的模型</span>
+          </el-menu-item>
         </el-menu>
         <div class="menuBox" style="margin-bottom: 40px;margin-top: auto">
           <svg-icon name="outLogin" class="icon" width="24px" height="24px" />
@@ -143,8 +149,8 @@ function toRouter(path: string) {
   border-right: 1px #EBEBEB solid;
   flex-direction: column;
   display: flex;
-  overflow-y: auto;
   .el-menu {
+    overflow-y: auto;
     border: none;
     .el-menu-item {
       white-space: pre-wrap;

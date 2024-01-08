@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import * as THREE from 'three'
-import { onMounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { GUI } from 'three/examples/jsm/libs/lil-gui.module.min.js'
-
-// import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader'
+import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader'
 
 const testMain = ref()
 // 创建场景
@@ -13,23 +12,22 @@ const scene = new THREE.Scene()
 const camera = ref()
 // 创建纹理加载器
 const textureLoader = new THREE.TextureLoader()
-const texture = textureLoader.load(new URL('../assets/textures/ColorMap.jpg', import.meta.url).href)
+const texture = textureLoader.load(new URL('../assets/textures/watercover/CityNewYork002_COL_VAR1_1K.png', import.meta.url).href)
 // 调色
-texture.colorSpace = THREE.SRGBColorSpace
-// texture.colorSpace = THREE.LinearSRGBColorSpace
+// texture.colorSpace = THREE.SRGBColorSpace
+texture.colorSpace = THREE.LinearSRGBColorSpace
 // texture.colorSpace = THREE.NoColorSpace
 // 加载ao贴图
-const aoMap = textureLoader.load(new URL('../assets/textures/Clouds.png', import.meta.url).href)
+const aoMap = textureLoader.load(new URL('../assets/textures/watercover/CityNewYork002_AO_1K.jpg', import.meta.url).href)
 // 透明度贴图
-const alphaMap = textureLoader.load(new URL('../assets/textures/BumpMap.jpg', import.meta.url).href)
+const alphaMap = textureLoader.load(new URL('../assets/textures/door/height.jpg', import.meta.url).href)
 // 光照贴图
-const lightMap = textureLoader.load(new URL('../assets/textures/perlinnoise.png', import.meta.url).href)
+const lightMap = textureLoader.load(new URL('../assets/textures/colors.png', import.meta.url).href)
+// 高光贴图
+const specularMap = textureLoader.load(new URL('../assets/textures/watercover/CityNewYork002_GLOSS_1K.jpg', import.meta.url).href)
 // rgbeLoader 加载hdr贴图
-// const rgbeLoader = new RGBELoader()
-// rgbeLoader.load(new URL('../assets/textures/map/map_living_room.jpg', import.meta.url).href, (envMap) => {
-//   scene.background = envMap
-// })
-textureLoader.load(new URL('../assets/textures/map/map_living_room.jpg', import.meta.url).href, (envMap: any) => {
+const rgbeLoader = new RGBELoader() // 加载hdr
+rgbeLoader.load(new URL('../assets/textures/Alex_Hart-Nature_Lab_Bones_2k.hdr', import.meta.url).href, (envMap) => {
   // 设置球形贴图
   envMap.mapping = THREE.EquirectangularReflectionMapping
   // 设置环境贴图
@@ -40,24 +38,38 @@ textureLoader.load(new URL('../assets/textures/map/map_living_room.jpg', import.
   // eslint-disable-next-line @typescript-eslint/no-use-before-define
   planeMaterial.envMap = envMap
 })
+// textureLoader.load(new URL('../assets/textures/map/map_living_room.jpg', import.meta.url).href, (envMap: any) => {
+//   // 设置球形贴图
+//   envMap.mapping = THREE.EquirectangularReflectionMapping
+//   // 设置环境贴图
+//   scene.background = envMap
+//   //  设置环境贴图
+//   scene.environment = envMap
+//   //   设置plane的环境贴图
+//   // eslint-disable-next-line @typescript-eslint/no-use-before-define
+//   planeMaterial.envMap = envMap
+// })
 // 创建渲染器
 const renderer = new THREE.WebGL1Renderer()
 // 创建几何体
-const planeGeometry = new THREE.PlaneGeometry(4, 2)
+const planeGeometry = new THREE.PlaneGeometry(1, 1)
 // 创建材质
 const planeMaterial = new THREE.MeshBasicMaterial({
-  color: 'transparent',
+  color: 0xFFFFFF,
   map: texture,
   side: THREE.DoubleSide,
   transparent: true, // 透明
-  aoMapIntensity: 0.2,
   aoMap, // 设置贴图
+  aoMapIntensity: 1,
   // alphaMap, // 透明度贴图
   // lightMap, // 光照贴图
-  reflectivity: 0.2, // 环境贴图透明度
+  //   设置高光贴图
+  specularMap,
+  reflectivity: 0.5, // 环境贴图透明度
 })
 // 创建网络
 const plane = new THREE.Mesh(planeGeometry, planeMaterial)
+// plane.rotation.set(Math.PI / 4, 0, 0)
 // 将网络添加到场景中
 scene.add(plane)
 // 添加世界坐标辅助器
@@ -76,6 +88,10 @@ gui.add(texture, 'colorSpace', {
   Linear: THREE.LinearSRGBColorSpace,
 }).onChange(() => {
   texture.needsUpdate = true
+})
+
+onUnmounted(() => {
+  gui.destroy()
 })
 
 onMounted(() => {
@@ -100,7 +116,7 @@ onMounted(() => {
   // controls.value.autoRotate = true
 
   // 设置相机位置
-  camera.value.position.set(0, 1, 8)
+  camera.value.position.set(2, 0, 2)
   camera.value.lookAt(0, 0, 0)
 
   // 动画渲染
