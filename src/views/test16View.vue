@@ -3,8 +3,8 @@ import * as THREE from 'three'
 import { onMounted, onUnmounted, ref } from 'vue'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { GUI } from 'three/examples/jsm/libs/lil-gui.module.min.js'
+import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
-import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 
 const testMain = ref()
 // 创建场景
@@ -13,43 +13,38 @@ const scene = new THREE.Scene()
 const camera = ref()
 // 创建渲染器
 const renderer = new THREE.WebGL1Renderer()
-// 创建纹理加载器
-const textureLoader = new THREE.TextureLoader()
-textureLoader.load(new URL('../assets/textures/map/map_living_room.jpg', import.meta.url).href, (envMap: any) => {
+// 实例化加载器gltf
+const gltfLoader = new GLTFLoader()
+// 加载模型
+gltfLoader.load(new URL('../assets/model/Duck.glb', import.meta.url).href, (gltf: any) => {
+  scene.add(gltf.scene)
+  const duckMesh = gltf.scene.getObjectByName('LOD3spShape')
+  const duckGeometry = duckMesh.geometry
+  //   计算包围盒
+  duckGeometry.computeBoundingBox()
+  //   获取包围盒
+  const duckBox = duckGeometry.boundingBox
+  // 更新世界矩阵
+  duckMesh.updateWorldMatrix(true, true)
+  // 更新包围盒
+  duckBox.applyMatrix4(duckMesh.matrixWorld)
+  // 创建包围盒辅助器
+  const boxHelper = new THREE.Box3Helper(duckBox, 0xFF0000)
+  scene.add(boxHelper)
+  console.log(duckBox, duckMesh)
+})
+
+// rgbeLoader 加载hdr贴图
+const rgbeLoader = new RGBELoader() // 加载hdr
+rgbeLoader.load(new URL('../assets/textures/Alex_Hart-Nature_Lab_Bones_2k.hdr', import.meta.url).href, (envMap) => {
   // 设置球形贴图
   envMap.mapping = THREE.EquirectangularReflectionMapping
   // 设置环境贴图
   scene.background = envMap
   //  设置环境贴图
   scene.environment = envMap
-  //   设置plane的环境贴图
-
-  // planeMaterial.envMap = envMap
-})
-// 实例化加载器gltf
-const gltfLoader = new GLTFLoader()
-// 加载模型
-gltfLoader.load(new URL('../assets/textures/GreenPlants.gltf', import.meta.url).href, (gltf: any) => {
-  console.log(gltf)
-  scene.add(gltf.scene)
 })
 
-// 实例化加载器draco
-const dracoLoader = new DRACOLoader()
-// 设置draco路径 new URL('../src/utils/draco/', import.meta.url).href
-dracoLoader.setDecoderPath('../src/utils/draco/')
-// 设置gltf加载器draco解码器
-gltfLoader.setDRACOLoader(dracoLoader)
-
-gltfLoader.load(new URL('../assets/model/city.glb', import.meta.url).href, (gltf: any) => {
-  console.log(gltf)
-  scene.add(gltf.scene)
-})
-// 创建场景fog
-scene.fog = new THREE.Fog(0x999999, 0.1, 150)
-// 场景场景指数fog
-// scene.fog = new THREE.FogExp2(0x999999, 0.1)
-// scene.background = new THREE.Color(0xFFFFFF)
 // 添加世界坐标辅助器
 const axesHelper = new THREE.AxesHelper(5)
 scene.add(axesHelper)
@@ -85,7 +80,7 @@ onMounted(() => {
   // controls.value.autoRotate = true
 
   // 设置相机位置
-  camera.value.position.set(0, 1, 8)
+  camera.value.position.set(0, 0, 12)
   camera.value.lookAt(0, 0, 0)
 
   // 动画渲染

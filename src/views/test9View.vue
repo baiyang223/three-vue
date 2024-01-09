@@ -3,7 +3,7 @@ import * as THREE from 'three'
 import { onMounted, onUnmounted, ref } from 'vue'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { GUI } from 'three/examples/jsm/libs/lil-gui.module.min.js'
-import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader'
+import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js'
 
 const testMain = ref()
 // 创建场景

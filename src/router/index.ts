@@ -74,6 +74,31 @@ const router = createRouter({
           name: 'test11',
           component: () => import('@/views/test11View.vue'),
         },
+        {
+          path: 'test12',
+          name: 'test12',
+          component: () => import('@/views/test12View.vue'),
+        },
+        {
+          path: 'test13',
+          name: 'test13',
+          component: () => import('@/views/test13View.vue'),
+        },
+        {
+          path: 'test14',
+          name: 'test14',
+          component: () => import('@/views/test14View.vue'),
+        },
+        {
+          path: 'test15',
+          name: 'test15',
+          component: () => import('@/views/test15View.vue'),
+        },
+        {
+          path: 'test16',
+          name: 'test16',
+          component: () => import('@/views/test16View.vue'),
+        },
       ],
     },
     {

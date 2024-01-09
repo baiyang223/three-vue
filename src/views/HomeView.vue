@@ -75,6 +75,21 @@ function toRouter(path: string) {
           <el-menu-item index="test11" route="test11">
             <span>加载gltf模型和加载压缩过的模型</span>
           </el-menu-item>
+          <el-menu-item index="test12" route="test12">
+            <span>光线投射实现3d场景交互事件</span>
+          </el-menu-item>
+          <el-menu-item index="test13" route="test13">
+            <span>补间动画Tween应用</span>
+          </el-menu-item>
+          <el-menu-item index="test14" route="test14">
+            <span>UV与应用</span>
+          </el-menu-item>
+          <el-menu-item index="test15" route="test15">
+            <span>法向量属性应用 法向量辅助器 几何体顶点转化 顶点位移 旋转 缩放</span>
+          </el-menu-item>
+          <el-menu-item index="test16" route="test16">
+            <span>包围盒使用与世界矩阵转换</span>
+          </el-menu-item>
         </el-menu>
         <div class="menuBox" style="margin-bottom: 40px;margin-top: auto">
           <svg-icon name="outLogin" class="icon" width="24px" height="24px" />
