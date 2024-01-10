@@ -38,6 +38,27 @@ const sphere3 = new THREE.Mesh(
 sphere3.position.x = 4
 scene.add(sphere3)
 
+const box = new THREE.Box3()
+const arrSphere = [sphere1, sphere2, sphere3]
+arrSphere.forEach((item: any) => {
+  // 第一种方式
+  // 获取当前物体的包围盒
+  // item.geometry.computeBoundingBox()
+  // // 获取包围盒
+  // const current = item.geometry.boundingBox
+  // // 更新世界矩阵
+  // item.updateWorldMatrix(true, true)
+  // // 将奥委会转换到世界坐标系
+  // current.applyMatrix4(item.matrixWorld)
+  // 第二种方式
+  const current = new THREE.Box3().setFromObject(item)
+  //   合并包围盒
+  box.union(current)
+})
+console.log(box)
+// 创建包围盒辅助器
+const boxHelper = new THREE.Box3Helper(box, 0xFFFF00)
+scene.add(boxHelper)
 // 创建射线
 const raycaster = new THREE.Raycaster()
 // 创建鼠标向量
@@ -115,6 +136,7 @@ onMounted(() => {
 
   camera.value.position.set(2, 2, 15)
   camera.value.lookAt(0, 0, 0)
+
   // 光线投射交互
   window.addEventListener('click', Click)
   // 动画渲染

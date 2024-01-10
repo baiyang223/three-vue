@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router'
 import { ref } from 'vue'
+import { menu } from '@/mock/menu'
 
 const router = useRouter()
 const route = useRoute()
@@ -42,53 +43,8 @@ function toRouter(path: string) {
           <el-menu-item index="staging" :route="{ path: '/' }">
             <span>工作台</span>
           </el-menu-item>
-          <el-menu-item index="test" route="test">
-            <span>方块动画旋转</span>
-          </el-menu-item>
-          <el-menu-item index="test2" route="test2">
-            <span>坐标辅助器与轨道控制器</span>
-          </el-menu-item>
-          <el-menu-item index="test3" route="test3">
-            <span>物体位移旋转与元素添加</span>
-          </el-menu-item>
-          <el-menu-item index="test4" route="test4">
-            <span>响应式与全屏控制</span>
-          </el-menu-item>
-          <el-menu-item index="test5" route="test5">
-            <span>lil-GUI调试</span>
-          </el-menu-item>
-          <el-menu-item index="test6" route="test6">
-            <span>几何体_顶点_索引_平面</span>
-          </el-menu-item>
-          <el-menu-item index="test7" route="test7">
-            <span>几何体划分顶点组设置不同材质</span>
-          </el-menu-item>
-          <el-menu-item index="test8" route="test8">
-            <span>常见几何体</span>
-          </el-menu-item>
-          <el-menu-item index="test9" route="test9">
-            <span>基础材料_贴图_高光_透视_环境_光照_环境遮蔽贴图</span>
-          </el-menu-item>
-          <el-menu-item index="test10" route="test10">
-            <span>场景的线型雾和指数雾</span>
-          </el-menu-item>
-          <el-menu-item index="test11" route="test11">
-            <span>加载gltf模型和加载压缩过的模型</span>
-          </el-menu-item>
-          <el-menu-item index="test12" route="test12">
-            <span>光线投射实现3d场景交互事件</span>
-          </el-menu-item>
-          <el-menu-item index="test13" route="test13">
-            <span>补间动画Tween应用</span>
-          </el-menu-item>
-          <el-menu-item index="test14" route="test14">
-            <span>UV与应用</span>
-          </el-menu-item>
-          <el-menu-item index="test15" route="test15">
-            <span>法向量属性应用 法向量辅助器 几何体顶点转化 顶点位移 旋转 缩放</span>
-          </el-menu-item>
-          <el-menu-item index="test16" route="test16">
-            <span>包围盒使用与世界矩阵转换</span>
+          <el-menu-item v-for="item of menu" :key="item.id" :index="`test${item.id}`" :route="`test${item.id}`">
+            <span>{{ item.title }}</span>
           </el-menu-item>
         </el-menu>
         <div class="menuBox" style="margin-bottom: 40px;margin-top: auto">
