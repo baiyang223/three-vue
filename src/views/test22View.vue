@@ -22,34 +22,34 @@ const sphere1 = new THREE.Mesh(
 sphere1.castShadow = true
 scene.add(sphere1)
 // 创建平面
-const planeGeometry = new THREE.PlaneBufferGeometry(10, 10)
+const planeGeometry = new THREE.PlaneBufferGeometry(50, 50)
 const plane = new THREE.Mesh(planeGeometry, material)
 plane.position.set(0, -1, 0)
 plane.rotation.x = -Math.PI / 2
+// 接收阴影
 plane.receiveShadow = true
 scene.add(plane)
 // 灯光 环境光
 const light = new THREE.AmbientLight(0xFFFFFF, 0.5)
 scene.add(light)
 // 直线光源
-const directionalLight = new THREE.DirectionalLight(0xFFFFFF, 0.5)
-directionalLight.position.set(10, 10, 10)
-directionalLight.castShadow = true
+const spotLight = new THREE.SpotLight(0xFFFFFF, 1)
+spotLight.position.set(10, 10, 10)
+spotLight.castShadow = true
+spotLight.intensity = 2
 // 设置阴影贴图的模糊度
-directionalLight.shadow.radius = 20
+spotLight.shadow.radius = 20
 // 设置阴影贴图的分辨率
-directionalLight.shadow.mapSize.set(4096, 4096)
-// console.log(directionalLight.shadow)
+spotLight.shadow.mapSize.set(4096, 4096)
+// console.log(spotLight.shadow)
+spotLight.target = sphere1
+spotLight.angle = Math.PI / 6
+spotLight.distance = 0
+spotLight.penumbra = 0
+spotLight.decay = 0
+// 设置透视相机的属性
 
-// 设置平行光投射相机的属性
-directionalLight.shadow.camera.near = 18
-directionalLight.shadow.camera.far = 500
-directionalLight.shadow.camera.top = 5
-directionalLight.shadow.camera.bottom = -5
-directionalLight.shadow.camera.left = -5
-directionalLight.shadow.camera.right = 5
-
-scene.add(directionalLight)
+scene.add(spotLight)
 // 添加世界坐标辅助器
 const axesHelper = new THREE.AxesHelper(5)
 scene.add(axesHelper)
@@ -69,9 +69,14 @@ const gui = new GUI()
 // 添加按钮
 gui.add(eventObj, 'FullScreen').name('全屏')
 gui.add(eventObj, 'exitFullscreen').name('退出全屏')
-gui.add(directionalLight.shadow.camera, 'near').min(15).max(20).step(0.1).onChange(() => {
-  directionalLight.shadow.camera.updateProjectionMatrix()
+gui.add(spotLight.shadow.camera, 'near').min(0.1).max(20).step(0.1).onChange(() => {
+  spotLight.shadow.camera.updateProjectionMatrix()
 })
+gui.add(spotLight.position, 'x').min(-15).max(15).step(0.1)
+gui.add(spotLight, 'angle').min(0.01).max(Math.PI / 2).step(0.01)
+gui.add(spotLight, 'distance').min(0.1).max(30).step(0.1)
+gui.add(spotLight, 'penumbra').min(0).max(1).step(0.1)
+gui.add(spotLight, 'decay').min(0).max(5).step(0.1)
 onMounted(() => {
   // 创建相机
   camera.value = new THREE.PerspectiveCamera(
@@ -83,6 +88,7 @@ onMounted(() => {
   // 设置渲染器宽高，并添加到页面
   renderer.setSize(testMain.value.clientWidth, testMain.value.clientHeight)
   renderer.shadowMap.enabled = true
+  renderer.physicallyCorrectLights = true
 
   // 监听窗口变化
   window.addEventListener('resize', () => {
