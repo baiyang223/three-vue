@@ -21,4 +21,6 @@ export const menu = [
   { id: 20, title: '灯光与阴影的关系与设置' },
   { id: 21, title: '平行光阴影属性与阴影相机原理' },
   { id: 22, title: '聚光灯各种属性与应用' },
+  { id: 23, title: '点光源属性与应用' },
+  { id: 24, title: '圣诞3D贺卡' },
 ]

@@ -157,6 +157,7 @@ function toRouter(path: string) {
   height: calc(100vh - 64px);
   background: #f5f5f5;
   overflow-y: auto;
+  position: relative;
 }
 :deep(.el-dialog__header){
   padding: 0 !important;
