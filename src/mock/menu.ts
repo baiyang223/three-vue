@@ -23,4 +23,5 @@ export const menu = [
   { id: 22, title: '聚光灯各种属性与应用' },
   { id: 23, title: '点光源属性与应用' },
   { id: 24, title: '圣诞3D贺卡' },
+  { id: 25, title: '汽车展示' },
 ]
