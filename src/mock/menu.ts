@@ -24,4 +24,11 @@ export const menu = [
   { id: 23, title: '点光源属性与应用' },
   { id: 24, title: '圣诞3D贺卡' },
   { id: 25, title: '汽车展示' },
+  { id: 26, title: '炫酷球形机器人展示' },
+  { id: 27, title: 'VR看房' },
+  { id: 28, title: '3D水晶小熊' },
+  { id: 29, title: '水天一色小岛' },
+  { id: 30, title: '3D地球' },
+  { id: 31, title: '3D文字' },
+  { id: 32, title: '地月环绕' },
 ]

@@ -37,7 +37,7 @@ gui.add(eventObj, 'FullScreen').name('全屏')
 gui.add(eventObj, 'exitFullscreen').name('退出全屏')
 
 const wheels = [] as any[]
-let carBody, frontCar, hoodCar, glassCar
+let carBody: any, frontCar: any, hoodCar: any, glassCar: any
 // 创建材质
 const bodyMaterial = new THREE.MeshPhysicalMaterial({
   color: 0xFF0000,
@@ -80,6 +80,12 @@ const materials = [
   { label: '冰晶', value: 0 },
 ]
 const currentMaterial = ref('冰晶')
+const currentCarPart = ref({} as any)
+
+// 创建射线
+const raycaster = new THREE.Raycaster()
+// 创建鼠标向量
+const mouse = new THREE.Vector2()
 function animate() {
   requestAnimationFrame(animate)
   controls.value.update()
@@ -114,7 +120,7 @@ onMounted(() => {
     camera.value.aspect = testMain.value.clientWidth / testMain.value.clientHeight
     camera.value.updateProjectionMatrix()
   })
-
+  window.addEventListener('click', Click)
   testMain.value.appendChild(renderer.domElement)
 
   // 添加轨道控制器 testMain.value
@@ -143,7 +149,7 @@ onMounted(() => {
           child.material = wheelsMaterial
           wheels.push(child)
         }
-        if (child.name.includes('Mesh002')) {
+        if (child.name === 'Mesh002') {
           carBody = child
           carBody.material = bodyMaterial
         }
@@ -196,21 +202,56 @@ onMounted(() => {
 
 onUnmounted(() => {
   gui.destroy()
+  window.removeEventListener('click', Click)
 })
 
 function selectColor() {
-  wheelsMaterial.color.set(currentColor.value)
-  frontMaterial.color.set(currentColor.value)
-  bodyMaterial.color.set(currentColor.value)
-  hoodMaterial.color.set(currentColor.value)
+  if (currentCarPart.value?.object?.id) {
+    currentCarPart.value.object.material.color.set(currentColor.value)
+  }
+  else {
+    wheelsMaterial.color.set(currentColor.value)
+    frontMaterial.color.set(currentColor.value)
+    bodyMaterial.color.set(currentColor.value)
+    hoodMaterial.color.set(currentColor.value)
+  }
   // glassMaterial.color.set(currentColor.value)
 }
 
 function selectMaterial() {
-  console.log(wheels)
   frontMaterial.clearcoatRoughness = currentMaterial.value
   bodyMaterial.clearcoatRoughness = currentMaterial.value
   hoodMaterial.clearcoatRoughness = currentMaterial.value
+}
+
+function Click(event: MouseEvent) {
+  //   设置鼠标向量的x，y值
+  mouse.x = ((event.clientX - (window.innerWidth - testMain.value.clientWidth)) / testMain.value.clientWidth) * 2 - 1
+  mouse.y = -(((event.clientY - (window.innerHeight - testMain.value.clientHeight)) / testMain.value.clientHeight) * 2 - 1)
+
+  //   通过摄像机和鼠标位置更新射线
+  raycaster.setFromCamera(mouse, camera.value)
+  //   计算物体和射线的焦点
+  const boxArr = [carBody, frontCar, hoodCar, ...wheels]
+  const intersects = raycaster.intersectObjects(boxArr)
+  if (intersects.length > 0) {
+    currentCarPart.value = {}
+    if (intersects[0].object.isSelect) {
+      intersects[0].object.position.y = 0
+      intersects[0].object.isSelect = false
+      return
+    }
+    boxArr.forEach((item) => {
+      if (item.isSelect) {
+        item.isSelect = false
+        item.position.y = 0
+      }
+    })
+    intersects[0].object.isSelect = true
+    intersects[0].object._translateY = intersects[0].object.position.y
+    intersects[0].object.position.y = 1
+    currentCarPart.value = intersects[0]
+  }
 }
 </script>
 
@@ -268,13 +309,12 @@ function selectMaterial() {
 }
 .ctrlBox {
   width: 260px;
-  height: 100%;
   padding: 0 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   position: absolute;
-  top: 0;
+  top: 20px;
   right: 0;
   .el-select {
     width: 100% !important;
