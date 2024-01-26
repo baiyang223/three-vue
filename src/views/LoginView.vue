@@ -61,20 +61,25 @@ async function submitForm(formEl: FormInstance | undefined) {
     return
   await formEl.validate((valid) => {
     if (valid) {
-      UserService.login(loginForm).then(
-        (res) => {
-          localStorage.setItem('token', res.data.token)
-          // UserService.getUserinfo().then((res: any) => {
-          //   localStorage.setItem('routerList', JSON.stringify(res.data.permissions))
-          //   localStorage.setItem('userInfo', JSON.stringify(res.data))
-          ElMessage.success('登录成功')
-          router.push('/')
-          // })
-        },
-        (err) => {
-          ElMessage.error(err.data.message)
-        },
-      )
+      // UserService.login(loginForm).then(
+      //   (res) => {
+      //     localStorage.setItem('token', res.data.token)
+      //     // UserService.getUserinfo().then((res: any) => {
+      //     //   localStorage.setItem('routerList', JSON.stringify(res.data.permissions))
+      //     //   localStorage.setItem('userInfo', JSON.stringify(res.data))
+      //     ElMessage.success('登录成功')
+      //     router.push('/')
+      //     // })
+      //   },
+      //   (err) => {
+      //     ElMessage.error(err.data.message)
+      //   },
+      // )
+      if (loginForm.username === 'wzy223' && loginForm.password === '888888') {
+        localStorage.setItem('token', 'asdfasdfasdfasdfasdfasdfasdfasdfasd')
+        ElMessage.success('登录成功')
+        router.push('/')
+      }
     }
     else { ElMessage.error('用户名或密码不符合要求') }
   })

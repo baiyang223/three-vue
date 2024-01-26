@@ -58,11 +58,11 @@ gui.add(eventObj, 'exitFullscreen').name('退出全屏')
 // 控制立方体的位置
 // gui.add(cube.position, 'x', -5, 5).name('立方体x轴位置')
 const folder = gui.addFolder('立方体位置')
-folder.add(cube.position, 'x').min(-10).max(10).step(1).name('立方体x轴位置').onChange((val) => {
-  console.log(val)
+folder.add(cube.position, 'x').min(-10).max(10).step(1).name('立方体x轴位置').onChange((val: any) => {
+  // console.log(val)
 })
-folder.add(cube.position, 'y').min(-10).max(10).step(1).name('立方体y轴位置').onFinishChange((val) => {
-  console.log(val)
+folder.add(cube.position, 'y').min(-10).max(10).step(1).name('立方体y轴位置').onFinishChange((val: any) => {
+  // console.log(val)
 })
 folder.add(cube.position, 'z').min(-10).max(10).step(1).name('立方体z轴位置')
 
@@ -71,7 +71,7 @@ gui.add(parentMaterial, 'wireframe').name('父元素线框模式')
 const colorParams = {
   cubeColor: '#0000ff',
 }
-gui.addColor(colorParams, 'cubeColor').name('立方体颜色').onChange((val) => {
+gui.addColor(colorParams, 'cubeColor').name('立方体颜色').onChange((val: any) => {
   cube.material.color.set(val)
 })
 

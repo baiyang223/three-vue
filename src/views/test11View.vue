@@ -30,7 +30,7 @@ textureLoader.load(new URL('../assets/textures/map/map_living_room.jpg', import.
 const gltfLoader = new GLTFLoader()
 // 加载模型
 gltfLoader.load(new URL('../assets/textures/GreenPlants.gltf', import.meta.url).href, (gltf: any) => {
-  console.log(gltf)
+  // console.log(gltf)
   scene.add(gltf.scene)
 })
 
@@ -42,7 +42,7 @@ dracoLoader.setDecoderPath('../src/utils/draco/')
 gltfLoader.setDRACOLoader(dracoLoader)
 
 gltfLoader.load(new URL('../assets/model/city.glb', import.meta.url).href, (gltf: any) => {
-  console.log(gltf)
+  // console.log(gltf)
   scene.add(gltf.scene)
 })
 // 创建场景fog

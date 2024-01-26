@@ -31,4 +31,7 @@ export const menu = [
   { id: 30, title: '3D地球' },
   { id: 31, title: '3D文字' },
   { id: 32, title: '地月环绕' },
+  { id: 33, title: '3D文字特效' },
+  { id: 34, title: '世界杯点球3D小游戏' },
+  { id: 35, title: '3D导弹飞行演示' },
 ]
