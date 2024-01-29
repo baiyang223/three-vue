@@ -34,4 +34,11 @@ export const menu = [
   { id: 33, title: '3D文字特效' },
   { id: 34, title: '世界杯点球3D小游戏' },
   { id: 35, title: '3D导弹飞行演示' },
+  { id: 36, title: '着色器2D转3D' },
+  { id: 37, title: 'cannon引擎基本使用和碰撞' },
+  { id: 38, title: 'cannon材质与摩擦系数和弹性与接触的设置' },
+  { id: 39, title: 'cannon碰撞与碰撞组' },
+  { id: 40, title: 'cannon碰撞监听_信息_物体休眠_休眠事件' },
+  { id: 41, title: 'cannon多个形状组合物体' },
+  { id: 42, title: 'cannon多种方式给物体施加作用力' },
 ]
