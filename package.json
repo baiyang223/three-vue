@@ -10,6 +10,7 @@
     "type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false"
   },
   "dependencies": {
+    "@kjgl77/datav-vue3": "^1.7.2",
     "axios": "1.6.0",
     "cannon-es": "^0.20.0",
     "element-plus": "^2.3.9",

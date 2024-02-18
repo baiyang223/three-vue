@@ -23,6 +23,11 @@ const router = createRouter({
       ],
     },
     {
+      path: '/data_v',
+      name: 'dataV',
+      component: () => import('@/views/DataVView.vue'),
+    },
+    {
       path: '/login',
       name: 'login',
       component: () => import('@/views/LoginView.vue'),

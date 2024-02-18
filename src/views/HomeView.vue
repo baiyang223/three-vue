@@ -48,11 +48,11 @@ function toRouter(path: string) {
           </el-menu-item>
         </el-menu>
         <div class="menuBox" style="margin-bottom: 40px;margin-top: auto">
-          <svg-icon name="outLogin" class="icon" width="24px" height="24px" />
+          <svg-icon name="outLogin" class="icon" style="font-size: 24px" width="24px" height="24px" />
           <el-popconfirm title="确定退出登陆吗？" width="160" @confirm="logout">
             <template #reference>
               <div class="logoutShow">
-                <div style="text-align: left;">
+                <div style="text-align: left; font-size: 14px">
                   退出登陆
                 </div>
               </div>
