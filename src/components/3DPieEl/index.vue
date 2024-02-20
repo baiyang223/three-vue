@@ -34,7 +34,7 @@ const eventObj = {
 // gui.add(eventObj, 'FullScreen').name('全屏')
 // gui.add(eventObj, 'exitFullscreen').name('退出全屏')
 
-const data = [{ label: '昨天', value: 200 }, { label: '今天天', value: 120 }]
+const data = [{ label: '昨天', value: 200 }, { label: '今天', value: 120 }]
 const color = [0xFFFF00, 0x1482F0]
 
 onMounted(() => {

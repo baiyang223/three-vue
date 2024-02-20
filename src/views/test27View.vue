@@ -3,7 +3,6 @@ import * as THREE from 'three'
 import { onMounted, onUnmounted, ref } from 'vue'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { GUI } from 'three/examples/jsm/libs/lil-gui.module.min.js'
-import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js'
 
 const testMain = ref()
 // 创建场景
@@ -31,36 +30,36 @@ const eventObj = {
 // 创建GUI
 const gui = new GUI()
 // 添加立方体
-// const geometry = new THREE.BoxGeometry(10, 10, 10)
-// // 4_b,
-// const arr = ['4_b', '4_f', '4_u', '4_d', '4_r', '4_l']
-// const boxMaterials = [] as any[]
-// arr.forEach((item) => {
-// //   纹理加载
-//   const texture = new THREE.TextureLoader().load(new URL(`../assets/textures/imgs/living/${item}.jpg`, import.meta.url).href)
-//   //   创建材质
-//   if (item === '4_u' || item === '4_d') {
-//     texture.rotation = item === '4_d' ? Math.PI / 2 : -Math.PI / 2
-//     texture.center = new THREE.Vector2(0.5, 0.5)
-//     boxMaterials.push(new THREE.MeshBasicMaterial({ map: texture }))
-//   }
-//   else {
-//     boxMaterials.push(new THREE.MeshBasicMaterial({ map: texture }))
-//   }
-// })
-// const cube = new THREE.Mesh(geometry, boxMaterials)
-// cube.geometry.scale(1, 1, -1)
-// scene.add(cube)
+const geometry = new THREE.BoxGeometry(10, 10, 10)
+// 4_b,
+const arr = ['4_b', '4_f', '4_u', '4_d', '4_r', '4_l']
+const boxMaterials = [] as any[]
+arr.forEach((item) => {
+//   纹理加载
+  const texture = new THREE.TextureLoader().load(new URL(`../assets/textures/imgs/living/${item}.jpg`, import.meta.url).href)
+  //   创建材质
+  if (item === '4_u' || item === '4_d') {
+    texture.rotation = item === '4_d' ? Math.PI / 2 : -Math.PI / 2
+    texture.center = new THREE.Vector2(0.5, 0.5)
+    boxMaterials.push(new THREE.MeshBasicMaterial({ map: texture }))
+  }
+  else {
+    boxMaterials.push(new THREE.MeshBasicMaterial({ map: texture }))
+  }
+})
+const cube = new THREE.Mesh(geometry, boxMaterials)
+cube.geometry.scale(1, 1, -1)
+scene.add(cube)
 
 // 添加球
-const geometry = new THREE.SphereGeometry(5, 32, 32)
-const loader = new RGBELoader()
-loader.load(new URL('../assets/textures/imgs/hdr/Living.hdr', import.meta.url).href, (texture) => {
-  const material = new THREE.MeshBasicMaterial({ map: texture })
-  const sphere = new THREE.Mesh(geometry, material)
-  sphere.geometry.scale(1, 1, -1)
-  scene.add(sphere)
-})
+// const geometry = new THREE.SphereGeometry(5, 32, 32)
+// const loader = new RGBELoader()
+// loader.load(new URL('../assets/textures/imgs/hdr/Living.hdr', import.meta.url).href, (texture) => {
+//   const material = new THREE.MeshBasicMaterial({ map: texture })
+//   const sphere = new THREE.Mesh(geometry, material)
+//   sphere.geometry.scale(1, 1, -1)
+//   scene.add(sphere)
+// })
 // 添加按钮
 gui.add(eventObj, 'FullScreen').name('全屏')
 gui.add(eventObj, 'exitFullscreen').name('退出全屏')

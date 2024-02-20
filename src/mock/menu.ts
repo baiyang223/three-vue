@@ -41,4 +41,5 @@ export const menu = [
   { id: 40, title: 'cannon碰撞监听_信息_物体休眠_休眠事件' },
   { id: 41, title: 'cannon多个形状组合物体' },
   { id: 42, title: 'cannon多种方式给物体施加作用力' },
+  { id: 43, title: '智慧园区' },
 ]
