@@ -27,6 +27,9 @@ import PieEl from '@/components/3DPieEl/index.vue'
   overflow: hidden;
   background: #303133;
   color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   :deep(#dv-full-screen-container) {
     padding: 0 20px;
     box-sizing: border-box;

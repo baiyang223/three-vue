@@ -85,6 +85,9 @@ function translateCamera(position: any, target: any) {
     z: target.z,
     duration: 1,
     ease: 'power2.inOut',
+    onComplete() {
+      controls.value.target.set(target.x, target.y, target.z - 0.001)
+    },
   })
 }
 onMounted(() => {
@@ -115,6 +118,7 @@ onMounted(() => {
   labelRenderer.setSize(testMain.value.clientWidth, testMain.value.clientHeight)
   labelRenderer.domElement.style.position = 'absolute'
   labelRenderer.domElement.style.top = '0px'
+  // labelRenderer.domElement.style.pointerEvents = 'none'
   testMain.value.appendChild(labelRenderer.domElement)
   // 添加轨道控制器
   controls.value = new OrbitControls(camera.value, renderer.domElement)
